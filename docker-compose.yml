@@ -54,20 +54,29 @@ services:
     depends_on:
       - mobilizon-db
     environment:
-      # The script uses these variables:
+      # Database connection settings
+      MOBILIZON_DATABASE_HOST: mobilizon-db
+      MOBILIZON_DATABASE_DBNAME: mobilizon
       MOBILIZON_DATABASE_USERNAME: mobilizon
       MOBILIZON_DATABASE_PASSWORD: MobilizonPass123
-      MOBILIZON_DATABASE_HOST: mobilizon-db
       MOBILIZON_DATABASE_PORT: 5432
-      MOBILIZON_DATABASE_DBNAME: mobilizon
 
-      # Mobilizon instance settings and secrets
-      SECRET_KEY_BASE: "CHANGE_ME_50_CHARS_RANDOM"
-      INSTANCE_HOST: "localhost"
-      INSTANCE_PORT: "4000"
-      INSTANCE_NAME: "My Mobilizon Instance"
-      INSTANCE_EMAIL: "noreply@example.com"
-      REGISTRATIONS_OPEN: "true"
+      # Instance settings
+      MOBILIZON_INSTANCE_HOST: localhost
+      MOBILIZON_INSTANCE_PORT: 4000
+      MOBILIZON_INSTANCE_NAME: "My Mobilizon Instance"
+      MOBILIZON_INSTANCE_EMAIL: "noreply@example.com"
+      MOBILIZON_INSTANCE_REGISTRATIONS_OPEN: "true"
+      
+      MOBILIZON_INSTANCE_LOCAL_ONLY: "true"
+      MOBILIZON_FEDERATION_ENABLED: "false"
+
+      # Replace these secrets with secure random values for production
+      MOBILIZON_INSTANCE_SECRET_KEY_BASE: "CHANGE_ME_TO_50_CHAR_RANDOMCHANGE_ME_TO_50_CHAR_RANDOM"
+      MOBILIZON_INSTANCE_SECRET_KEY: "CHANGE_ME_TO_50_CHAR_RANDOMxCHANGE_ME_TO_50_CHAR_RANDOM"
+
+    volumes:
+      - ./mobilizon_config/config.exs:/etc/mobilizon/config.exs:ro
 
     ports:
       - "4000:4000"
