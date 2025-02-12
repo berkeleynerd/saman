@@ -1,0 +1,36 @@
+{
+  "realm": "mobilizon-realm",
+  "enabled": true,
+  "users": [
+    {
+      "username": "testuser",
+      "enabled": true,
+      "email": "testuser@example.com",
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "testpassword",
+          "temporary": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "mobilizon",
+      "publicClient": false,
+      "secret": "CHANGE_ME_TO_SOME_SECRET",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "redirectUris": [
+        "http://localhost:4000/auth/keycloak/callback"
+      ],
+      "webOrigins": [
+        "http://localhost:4000"
+      ],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false
+    }
+  ]
+}

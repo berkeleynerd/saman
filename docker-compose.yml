@@ -1,0 +1,42 @@
+services:
+
+  mobilizon-db:
+    build: .
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=mobilizon
+      - POSTGRES_USER=mobilizon
+      - POSTGRES_PASSWORD=MobilizonPass123
+    volumes:
+      - mobilizon_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  mobilizon:
+
+    image: framasoft/mobilizon:latest
+    container_name: mobilizon_app
+    depends_on:
+      - mobilizon-db
+    environment:
+      # The script uses these variables:
+      MOBILIZON_DATABASE_USERNAME: mobilizon
+      MOBILIZON_DATABASE_PASSWORD: MobilizonPass123
+      MOBILIZON_DATABASE_HOST: mobilizon-db
+      MOBILIZON_DATABASE_PORT: 5432
+      MOBILIZON_DATABASE_DBNAME: mobilizon
+
+      # Mobilizon instance settings and secrets
+      SECRET_KEY_BASE: "CHANGE_ME_50_CHARS_RANDOM"
+      INSTANCE_HOST: "localhost"
+      INSTANCE_PORT: "4000"
+      INSTANCE_NAME: "My Mobilizon Instance"
+      INSTANCE_EMAIL: "noreply@example.com"
+      REGISTRATIONS_OPEN: "true"
+
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+volumes:
+  mobilizon_db_data:
