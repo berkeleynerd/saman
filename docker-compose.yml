@@ -1,5 +1,35 @@
 services:
 
+  keycloak-db:
+    image: postgres:15-alpine
+    container_name: keycloak_db
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=KeycloakPass123
+    volumes:
+      - keycloak_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    depends_on:
+      - keycloak-db
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: KeycloakPass123
+    command:
+      - start-dev
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
   mobilizon-db:
     build: .
     ports:
@@ -40,3 +70,4 @@ services:
 
 volumes:
   mobilizon_db_data:
+  keycloak_db_data:
