@@ -1,5 +1,11 @@
 # Saman
 
+###12-02-2025
+* Lack of arm postgis container resolved by adding it to stock multi-arch postgres via Dockerfile 
+* selinux requires you to run `chcon -Rt container_file_t keycloak_import` or mounting fails
+* possibly you also need to run `chmod 755 keycloak_import` and `chmod 644 keycloak_import/mobilizon-realm.json`
+* Keycloak @ http://localhost:8080 | Mobilizon @ http://localhost:4000
+
 ## Auth Prototype
 
 ```mermaid
