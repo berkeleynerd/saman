@@ -1,8 +1,13 @@
 # mobilizon_config/config.exs
 import Config
 
+# Disable federation while testing
 config :mobilizon, :federation, enabled: false
 config :mobilizon, Mobilizon.Federation, enabled: false
+
+# Use a bunk mailer to avoid lack of configured SMTP server
+config :mobilizon, Mobilizon.Web.Email.Mailer,
+  adapter: Swoosh.Adapters.Local
 
 
 # Configure Ueberauth for Keycloak
